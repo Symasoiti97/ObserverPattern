@@ -10,6 +10,7 @@ namespace ObserverPattern
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
