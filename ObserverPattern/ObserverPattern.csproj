@@ -33,13 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AngleSharp, Version=0.11.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
-      <HintPath>..\packages\AngleSharp.0.11.0\lib\net46\AngleSharp.dll</HintPath>
+    <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Syndication, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ServiceModel.Syndication.4.5.0\lib\net461\System.ServiceModel.Syndication.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.Encoding.CodePages, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.4.5.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
@@ -57,10 +62,17 @@
     <Compile Include="Observers\IObserver.cs" />
     <Compile Include="Observers\ISubject.cs" />
     <Compile Include="Observers\WeatherData.cs" />
+    <Compile Include="Pars\HtmlLoader.cs" />
     <Compile Include="Pars\IParser.cs" />
     <Compile Include="Pars\IParserSetting.cs" />
-    <Compile Include="Pars\ParsSite\SiteParser.cs" />
-    <Compile Include="Pars\ParsSite\SiteSettings.cs" />
+    <Compile Include="Pars\ParserNewsRambler\NewsRamblerParser.cs" />
+    <Compile Include="Pars\ParserNewsRambler\NewsRamblerSettings.cs" />
+    <Compile Include="Pars\ParserWeather\Weather.cs" />
+    <Compile Include="Pars\ParserWeather\YandexWeather\YandexWeatherParser.cs" />
+    <Compile Include="Pars\ParserWeather\YandexWeather\YandexWeatherSettings.cs" />
+    <Compile Include="Pars\ParserWorker.cs" />
+    <Compile Include="Pars\ParserHabr\HabraParser.cs" />
+    <Compile Include="Pars\ParserHabr\HabraSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

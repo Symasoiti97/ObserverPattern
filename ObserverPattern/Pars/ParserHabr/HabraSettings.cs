@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace ObserverPattern.Pars.ParsSite
 {
-    class SiteSettings : IParserSetting
+    class HabraSettings : IParserSettings
     {
+        public string BaseUrl { get; set; } = "https://habr.com/ru/";
 
-        public string BaseUrl { get; set; } = "URI";
-        public string Prefix { get; set; }
-
-        public SiteSettings()
+        public HabraSettings()
         {
-        }
 
+        }
      }
 }
