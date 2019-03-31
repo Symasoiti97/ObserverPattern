@@ -14,19 +14,16 @@ namespace ObserverPattern.Pars.ParserNewsRambler
         {
             List<Weather> weathers = new List<Weather>();
 
-            var list = document.QuerySelectorAll("div[span]")//.Where(item => item.ClassName != null && item.ClassName == "value")
+            var listTemp = document.QuerySelectorAll("span.unit.unit_temperature_c")
+                               .Select(item => item.TextContent).ToArray();
+            var listTimeOfDay = document.QuerySelectorAll("span.time_of_day")
+                               .Select(item => item.TextContent).ToArray();
 
-                .Select(item => item.TextContent).ToArray();
-            /*document.QuerySelectorAll("meta[content='IE=edge']")
-                .Select(el => el.GetAttribute(@"title")).ToArray();*/
-            /*document.QuerySelectorAll("span") meta http-equiv="X-UA-Compatible" content="IE=edge"
-               .Where(item => item.ClassName != null && item.ClassName.Contains("temp__value"))
-               .Select(item => item.TextContent).ToArray();*/
-
-            foreach (var el in list)
+            for(int i = 0; i < listTemp.Length; i++)
             {
                 Weather weather = new Weather();
-                weather.Temperature = el;
+                weather.Temperature = listTemp[i];
+                weather.TimeOfDay = listTimeOfDay[i];
                 weathers.Add(weather);
             }
 

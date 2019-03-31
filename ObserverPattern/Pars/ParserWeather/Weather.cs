@@ -8,6 +8,7 @@ namespace ObserverPattern.Pars.ParserWeather
 {
     class Weather
     {
-        public string Temperature {get; set;}
+        public string Temperature { get; set; }
+        public string TimeOfDay { get; set; }
     }
 }

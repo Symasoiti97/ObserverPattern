@@ -43,7 +43,7 @@ namespace ObserverPattern
         {
             for (int i = 0; i < arg2.Count; i++)
             {
-                Console.WriteLine(arg2[i].Temperature);
+                Console.WriteLine($"{arg2[i].Temperature} - {arg2[i].TimeOfDay}");
             }
         }
 
@@ -78,7 +78,7 @@ namespace ObserverPattern
             parser.OnCompleted += Parser_OnCompleted;
             parser.OnNewData += Parser_OnNewDataWeather;
 
-            parser.ParserSettings = new NewsRamblerSettings();
+            parser.ParserSettings = new YandexWeatherSetting();
             parser.Start();
         }
 
