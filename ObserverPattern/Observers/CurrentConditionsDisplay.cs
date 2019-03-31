@@ -12,6 +12,11 @@ namespace ObserverPattern.Observers
         private double humidity;
         private ISubject weatherData;
 
+        public CurrentConditionsDisplay()
+        {
+
+        }
+
         public CurrentConditionsDisplay(ISubject weatherData)
         {
             this.weatherData = weatherData;
