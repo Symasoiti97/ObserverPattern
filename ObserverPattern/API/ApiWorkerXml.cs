@@ -30,11 +30,6 @@ namespace ObserverPattern.API
 
                 while (isActive)
                 {
-                    if (isActive == false)
-                    {
-                        return;
-                    }
-
                     var reader = await webClient.DownloadStringTaskAsync(apiSetting.Url);
 
                     XDocument xDocument = XDocument.Parse(reader);
@@ -43,8 +38,7 @@ namespace ObserverPattern.API
 
                     EventStart?.Invoke(this, list);
                     
-                    Thread.Sleep(3000);
-                    //await Task.Delay(5000);
+                    await Task.Delay(300000);
                 }
 
                 EventAbort?.Invoke(this);

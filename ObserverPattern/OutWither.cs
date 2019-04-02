@@ -29,9 +29,6 @@ namespace ObserverPattern
             apiWorkerXml.EventStart += Show;
             apiWorkerXml.EventAbort += ShowAbort;
             apiWorkerXml.Start();
-            apiWorkerXml.Abort();
-            //Thread.Sleep(10000);
-            //apiWorkerXml.Start();
 
             #region[ApiWorkerJson]
             //ApiWorkerJson<Weather> apiWorkerJson = new ApiWorkerJson<Weather>(new WeatherOWM(), new WeatherOWMSetting());

@@ -19,7 +19,7 @@ namespace ObserverPattern.Observers
 
         public void Update(double temperature, double humidity, double pressure)
         {
-            //if (this.temperature != temperature)
+            if (this.temperature != temperature)
             {
                 this.temperature = temperature;
                 this.Display();
