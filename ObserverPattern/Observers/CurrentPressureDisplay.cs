@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace ObserverPattern.Observers
 {
-    class CurrentConditionsDisplay : IObserver, IDisplay
+    class CurrentPressureDisplay : IObserver, IDisplay
     {
-        private double temperature;
-        private double humidity;
+        private double pressure;
         private ISubject weatherData;
 
-        public CurrentConditionsDisplay(ISubject weatherData)
+        public CurrentPressureDisplay(ISubject weatherData)
         {
             this.weatherData = weatherData;
             this.weatherData.RegisterObserver(this);
@@ -20,14 +19,16 @@ namespace ObserverPattern.Observers
 
         public void Update(double temperature, double humidity, double pressure)
         {
-            this.temperature = temperature;
-            this.humidity = humidity;
-            this.Display();
+            if (this.pressure != pressure)
+            {
+                this.pressure = pressure;
+                this.Display();
+            }
         }
 
         public void Display()
         {
-            Console.WriteLine($"Current conditions: {this.temperature}C degrees and {this.humidity} % humidity");
+            Console.WriteLine($"Current pressure: {this.pressure} hpa");
         }
     }
 }
