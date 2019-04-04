@@ -8,27 +8,27 @@ namespace ObserverPattern.Observers
 {
     class CurrentHumidityDisplay : IObserver, IDisplay
     {
-        private double humidity;
-        private ISubject weatherData;
+        private double _humidity;
+        private ISubject _weatherData;
 
         public CurrentHumidityDisplay(ISubject weatherData)
         {
-            this.weatherData = weatherData;
-            this.weatherData.RegisterObserver(this);
+            _weatherData = weatherData;
+            _weatherData.RegisterObserver(this);
         }
 
         public void Update(double temperature, double humidity, double pressure)
         {
-            if (this.humidity != humidity)
+            if (_humidity != humidity)
             {
-                this.humidity = humidity;
-                this.Display();
+                _humidity = humidity;
+                Display();
             }
         }
 
         public void Display()
         {
-            Console.WriteLine($"Current humidity: {this.humidity} % ");
+            Console.WriteLine($"Current humidity: {this._humidity} % ");
         }
     }
 }

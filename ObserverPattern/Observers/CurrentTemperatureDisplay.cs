@@ -8,27 +8,27 @@ namespace ObserverPattern.Observers
 {
     class CurrentTemperatureDisplay : IObserver, IDisplay
     {
-        private double temperature;
-        private ISubject weatherData;
+        private double _temperature;
+        private ISubject _weatherData;
 
         public CurrentTemperatureDisplay(ISubject weatherData)
         {
-            this.weatherData = weatherData;
-            this.weatherData.RegisterObserver(this);
+            _weatherData = weatherData;
+            _weatherData.RegisterObserver(this);
         }
 
         public void Update(double temperature, double humidity, double pressure)
         {
-            if (this.temperature != temperature)
+            if (_temperature != temperature)
             {
-                this.temperature = temperature;
-                this.Display();
+                _temperature = temperature;
+                Display();
             }
         }
 
         public void Display()
         {
-            Console.WriteLine($"Current temperature: {this.temperature} C");
+            Console.WriteLine($"Current temperature: {this._temperature} C");
         }
     }
 }

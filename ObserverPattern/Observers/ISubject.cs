@@ -10,6 +10,6 @@ namespace ObserverPattern.Observers
     {
         void RegisterObserver(IObserver observer);
         void RemoveObserver(IObserver observer);
-        void NotifyObservers();
+        void SetMeasurements(double temperature, double humidity, double pressure);
     }
 }

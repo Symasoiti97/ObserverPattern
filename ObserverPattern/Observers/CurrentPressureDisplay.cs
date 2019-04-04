@@ -8,27 +8,27 @@ namespace ObserverPattern.Observers
 {
     class CurrentPressureDisplay : IObserver, IDisplay
     {
-        private double pressure;
-        private ISubject weatherData;
+        private double _pressure;
+        private ISubject _weatherData;
 
         public CurrentPressureDisplay(ISubject weatherData)
         {
-            this.weatherData = weatherData;
-            this.weatherData.RegisterObserver(this);
+            _weatherData = weatherData;
+            _weatherData.RegisterObserver(this);
         }
 
         public void Update(double temperature, double humidity, double pressure)
         {
-            if (this.pressure != pressure)
+            if (_pressure != pressure)
             {
-                this.pressure = pressure;
-                this.Display();
+                _pressure = pressure;
+                Display();
             }
         }
 
         public void Display()
         {
-            Console.WriteLine($"Current pressure: {this.pressure} hpa");
+            Console.WriteLine($"Current pressure: {this._pressure} hpa");
         }
     }
 }
