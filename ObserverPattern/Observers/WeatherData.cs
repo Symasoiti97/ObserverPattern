@@ -28,20 +28,20 @@ namespace ObserverPattern.Observers
             _observers.Remove(observer);
         }
 
-        private void NotifyObservers()
-        {
-            foreach (var observer in _observers)
-            {
-                observer.Update(_temperature, _humidity, _pressure);
-            }
-        }
-
         public void SetMeasurements(double temperature, double humidity, double pressure)
         {
             _temperature = temperature;
             _humidity = humidity;
             _pressure = pressure;
             NotifyObservers();
+        }
+
+        private void NotifyObservers()
+        {
+            foreach (var observer in _observers)
+            {
+                observer.Update(_temperature, _humidity, _pressure);
+            }
         }
     }
 }
