@@ -11,14 +11,14 @@ namespace ObserverPattern.API
 {
     class ApiWorkerXml<T> : ApiWorker<T> where T : class
     {
-        private IApiXml<T> apiXml;
+        private IApiXml<T> _apiXml;
 
-        public event Action<object, T> EventStart;
-        public event Action<object> EventAbort;
+        public override event Action<object, T> EventStart;
+        public override event Action<object> EventAbort;
 
         public ApiWorkerXml(IApiXml<T> api, IApiSetting apiSetting) : base(apiSetting)
         {
-            this.apiXml = api;
+            _apiXml = api;
         }
 
         #region[WorkerXml]
@@ -28,13 +28,13 @@ namespace ObserverPattern.API
             {
                 webClient.Encoding = Encoding.UTF8;
 
-                while (isActive)
+                while (_isActive)
                 {
-                    var reader = await webClient.DownloadStringTaskAsync(apiSetting.Url);
+                    var reader = await webClient.DownloadStringTaskAsync(_apiSetting.Url);
 
                     XDocument xDocument = XDocument.Parse(reader);
 
-                    var list = apiXml.GetXml(xDocument);
+                    var list = _apiXml.GetXml(xDocument);
 
                     EventStart?.Invoke(this, list);
                     

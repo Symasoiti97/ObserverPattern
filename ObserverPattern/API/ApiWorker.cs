@@ -12,27 +12,30 @@ namespace ObserverPattern.API
 {
     abstract class ApiWorker<T> where T : class
     {
-        public IApiSetting apiSetting;
+        protected IApiSetting _apiSetting;
 
-        protected bool isActive = false;
+        protected bool _isActive = false;
+
+        public abstract event Action<object, T> EventStart;
+        public abstract event Action<object> EventAbort;
 
         public ApiWorker(IApiSetting apiSetting)
         {
-            this.apiSetting = apiSetting;
+            this._apiSetting = apiSetting;
         }
 
         public void Start()
         {
-            if (isActive == false)
+            if (_isActive == false)
             {
-                isActive = true;
+                _isActive = true;
                 Worker();
             }
         }
 
         public void Abort()
         {
-            isActive = false;
+            _isActive = false;
             Thread.Sleep(300001);
         }
 

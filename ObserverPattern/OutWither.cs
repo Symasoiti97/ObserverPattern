@@ -12,26 +12,26 @@ namespace ObserverPattern
 {
     class OutWither
     {
-        WeatherData weatherData;
+        private WeatherData _weatherData;
 
         public OutWither()
         {
-            this.weatherData = new WeatherData();
+            _weatherData = new WeatherData();
         }
 
         public void Go()
         {
-            CurrentTemperatureDisplay currentTemperatureDisplay = new CurrentTemperatureDisplay(weatherData);
-            CurrentHumidityDisplay currentHumidityDisplay = new CurrentHumidityDisplay(weatherData);
-            CurrentPressureDisplay currentPressureDisplay = new CurrentPressureDisplay(weatherData);
+            CurrentTemperatureDisplay currentTemperatureDisplay = new CurrentTemperatureDisplay(_weatherData);
+            CurrentHumidityDisplay currentHumidityDisplay = new CurrentHumidityDisplay(_weatherData);
+            CurrentPressureDisplay currentPressureDisplay = new CurrentPressureDisplay(_weatherData);
 
-            ApiWorkerXml<Weather> apiWorkerXml = new ApiWorkerXml<Weather>(new WeatherOWM(), new WeatherOWMSetting());
+            ApiWorker<Weather> apiWorkerXml = new ApiWorkerXml<Weather>(new WeatherOWM(), new WeatherOWMSetting());
             apiWorkerXml.EventStart += Show;
             apiWorkerXml.EventAbort += ShowAbort;
             apiWorkerXml.Start();
 
             #region[ApiWorkerJson]
-            //ApiWorkerJson<Weather> apiWorkerJson = new ApiWorkerJson<Weather>(new WeatherOWM(), new WeatherOWMSetting());
+            //ApiWorker<Weather> apiWorkerJson = new ApiWorkerJson<Weather>(new WeatherOWM(), new WeatherOWMSetting());
             //apiWorkerJson.EventStart += Show;
             //apiWorkerJson.EventAbort += ShowAbort;
             //apiWorkerJson.Start();
@@ -40,7 +40,7 @@ namespace ObserverPattern
 
         private void Show(object obj, Weather weather)
         {
-                weatherData.SetMeasurements(Convert.ToDouble(weather.Temperature.Replace('.', ',')),
+                _weatherData.SetMeasurements(Convert.ToDouble(weather.Temperature.Replace('.', ',')),
                     Convert.ToDouble(weather.Humidity.Replace('.', ',')),
                     Convert.ToDouble(weather.Pressure.Replace('.', ',')));
         }

@@ -10,14 +10,14 @@ namespace ObserverPattern.API
 {
     class ApiWorkerJson<T> : ApiWorker<T> where T : class
     {
-        private IApiJson<T> apiJson;
+        private IApiJson<T> _apiJson;
 
-        public event Action<object, T> EventStart;
-        public event Action<object> EventAbort;
+        public override event Action<object, T> EventStart;
+        public override event Action<object> EventAbort;
 
         public ApiWorkerJson(IApiJson<T> apiJson, IApiSetting apiSetting) : base(apiSetting)
         {
-            this.apiJson = apiJson;
+            _apiJson = apiJson;
             apiSetting.Url = "http://api.openweathermap.org/data/2.5/weather?id=617239&units=metric&type=like&APPID=1b9b3c3931a1d8b0be0ca6f725fd0388";
         }
 
@@ -28,13 +28,13 @@ namespace ObserverPattern.API
             {
                 webClient.Encoding = Encoding.UTF8;
 
-                while (isActive)
+                while (_isActive)
                 {
-                    var reader = await webClient.DownloadStringTaskAsync(apiSetting.Url);
+                    var reader = await webClient.DownloadStringTaskAsync(_apiSetting.Url);
 
                     JObject json = JObject.Parse(reader);
 
-                    var list = apiJson.GetJson(json);
+                    var list = _apiJson.GetJson(json);
 
                     EventStart?.Invoke(this, list);
 
