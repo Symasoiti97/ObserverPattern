@@ -10,28 +10,29 @@ using System.Xml.Linq;
 
 namespace ObserverPattern.API
 {
-    abstract class ApiWorker<T> where T : class
+    class ApiWorker<T> where T : class
     {
-        protected IApiSetting _apiSetting;
+        private IApiSetting _apiSetting;
+        private IApi<T> _api;
 
         private CancellationTokenSource token;
 
-        protected bool _isActive = false;
+        private bool _isActive = false;
 
-        public abstract event Action<T> EventStart;
-        public abstract event Action EventAbort;
+        public event Action<T> EventStart;
+        public event Action EventAbort;
 
-        public ApiWorker(IApiSetting apiSetting)
+        public ApiWorker(IApi<T> api, IApiSetting apiSetting)
         {
-            this._apiSetting = apiSetting;
+            _api = api;
+            _apiSetting = apiSetting;
         }
 
         public void Start()
         {
             _isActive = true;
             token = new CancellationTokenSource();
-            Worker(token.Token);
-            _isActive = false;
+            Task.Run(() => Worker(token.Token));
         }
 
         public void Abort()
@@ -40,6 +41,33 @@ namespace ObserverPattern.API
             token?.Cancel();
         }
 
-        protected abstract Task Worker(CancellationToken token);
+        private async Task Worker(CancellationToken token)
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Encoding = Encoding.UTF8;
+
+                while (_isActive)
+                {
+                    var reader = await webClient.DownloadStringTaskAsync(_apiSetting.Url);
+
+                    var list = _api.Parse(reader);
+
+                    EventStart?.Invoke(list);
+
+                    try
+                    {
+                        await Task.Delay(2000, token);
+                    }
+                    catch (OperationCanceledException ex)
+                    {
+                        // Console.WriteLine(ex.ToString());
+                        //EventAbort?.Invoke();
+                    }
+                }
+            }
+
+            EventAbort?.Invoke();
+        }
     }
 }

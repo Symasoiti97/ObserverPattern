@@ -1,15 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ObserverPattern.API
 {
-    interface IApiJson<T> where T : class
+    interface IApi<T>
     {
-        T GetJson(JObject json);
+        T Parse(string reader);
     }
 }

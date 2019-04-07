@@ -25,21 +25,11 @@ namespace ObserverPattern
             CurrentHumidityDisplay currentHumidityDisplay = new CurrentHumidityDisplay(_weatherData);
             CurrentPressureDisplay currentPressureDisplay = new CurrentPressureDisplay(_weatherData);
 
-            ApiWorker<Weather> apiWorkerXml = new ApiWorkerXml<Weather>(new WeatherOWM(), new WeatherOWMSetting());
-            apiWorkerXml.EventStart += Show;
-            apiWorkerXml.EventAbort += ShowAbort;
-            apiWorkerXml.Start();
-            Console.WriteLine("Start Abort()");
-            Thread.Sleep(4000);
-            apiWorkerXml.Abort();
-            Console.WriteLine("End Abort()!");
+            ApiWorker<Weather> apiWorker = new ApiWorker<Weather>(new ApiWeatherXml(), new WeatherOWMSetting());
+            apiWorker.EventStart += Show;
+            apiWorker.EventAbort += ShowAbort;
 
-            #region[ApiWorkerJson]
-            //ApiWorker<Weather> apiWorkerJson = new ApiWorkerJson<Weather>(new WeatherOWM(), new WeatherOWMSetting());
-            //apiWorkerJson.EventStart += Show;
-            //apiWorkerJson.EventAbort += ShowAbort;
-            //apiWorkerJson.Start();
-            #endregion
+            apiWorker.Start();
         }
 
         private void Show(Weather weather)

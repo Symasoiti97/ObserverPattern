@@ -46,12 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\ApiWorkerJson.cs" />
-    <Compile Include="API\ApiWorkerXml.cs" />
+    <Compile Include="API\ApiOWM\ApiWeatherJson.cs" />
+    <Compile Include="API\ApiOWM\ApiWeatherXml.cs" />
     <Compile Include="API\ApiOWM\Weather.cs" />
     <Compile Include="API\ApiOWM\WeatherOWMSetting.cs" />
+    <Compile Include="API\IApi.cs" />
     <Compile Include="API\IApiSetting.cs" />
-    <Compile Include="API\IApiJson.cs" />
     <Compile Include="Observers\CurrentPressureDisplay.cs" />
     <Compile Include="Observers\CurrentHumidityDisplay.cs" />
     <Compile Include="Observers\CurrentTemperatureDisplay.cs" />
@@ -62,9 +62,7 @@
     <Compile Include="OutWither.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="API\ApiOWM\WeatherOWM.cs" />
     <Compile Include="API\ApiWorker.cs" />
-    <Compile Include="API\IApiXml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
