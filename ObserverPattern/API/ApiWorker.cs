@@ -14,10 +14,12 @@ namespace ObserverPattern.API
     {
         protected IApiSetting _apiSetting;
 
+        private CancellationTokenSource token;
+
         protected bool _isActive = false;
 
-        public abstract event Action<object, T> EventStart;
-        public abstract event Action<object> EventAbort;
+        public abstract event Action<T> EventStart;
+        public abstract event Action EventAbort;
 
         public ApiWorker(IApiSetting apiSetting)
         {
@@ -26,19 +28,18 @@ namespace ObserverPattern.API
 
         public void Start()
         {
-            if (_isActive == false)
-            {
-                _isActive = true;
-                Worker();
-            }
+            _isActive = true;
+            token = new CancellationTokenSource();
+            Worker(token.Token);
+            _isActive = false;
         }
 
         public void Abort()
         {
             _isActive = false;
-            Thread.Sleep(300001);
+            token?.Cancel();
         }
 
-        protected abstract Task Worker();
+        protected abstract Task Worker(CancellationToken token);
     }
 }

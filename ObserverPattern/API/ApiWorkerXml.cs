@@ -13,16 +13,15 @@ namespace ObserverPattern.API
     {
         private IApiXml<T> _apiXml;
 
-        public override event Action<object, T> EventStart;
-        public override event Action<object> EventAbort;
+        public override event Action<T> EventStart;
+        public override event Action EventAbort;
 
         public ApiWorkerXml(IApiXml<T> api, IApiSetting apiSetting) : base(apiSetting)
         {
             _apiXml = api;
         }
 
-        #region[WorkerXml]
-        protected sealed override async Task Worker()
+        protected sealed override async Task Worker(CancellationToken token)
         {
             using (WebClient webClient = new WebClient())
             {
@@ -36,16 +35,13 @@ namespace ObserverPattern.API
 
                     var list = _apiXml.GetXml(xDocument);
 
-                    EventStart?.Invoke(this, list);
+                    EventStart?.Invoke(list);
                     
-                    await Task.Delay(300000);
+                    await Task.Delay(2000, token);
                 }
 
-                EventAbort?.Invoke(this);
+                EventAbort?.Invoke();
             }
-
-            
         }
-        #endregion
     }
 }

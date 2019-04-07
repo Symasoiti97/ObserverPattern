@@ -29,6 +29,10 @@ namespace ObserverPattern
             apiWorkerXml.EventStart += Show;
             apiWorkerXml.EventAbort += ShowAbort;
             apiWorkerXml.Start();
+            Console.WriteLine("Start Abort()");
+            Thread.Sleep(4000);
+            apiWorkerXml.Abort();
+            Console.WriteLine("End Abort()!");
 
             #region[ApiWorkerJson]
             //ApiWorker<Weather> apiWorkerJson = new ApiWorkerJson<Weather>(new WeatherOWM(), new WeatherOWMSetting());
@@ -38,14 +42,14 @@ namespace ObserverPattern
             #endregion
         }
 
-        private void Show(object obj, Weather weather)
+        private void Show(Weather weather)
         {
                 _weatherData.SetMeasurements(Convert.ToDouble(weather.Temperature.Replace('.', ',')),
                     Convert.ToDouble(weather.Humidity.Replace('.', ',')),
                     Convert.ToDouble(weather.Pressure.Replace('.', ',')));
         }
 
-        private static void ShowAbort(object obj)
+        private static void ShowAbort()
         {
             Console.WriteLine("Abort");
         }

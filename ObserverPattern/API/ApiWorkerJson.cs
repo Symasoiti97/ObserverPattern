@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ObserverPattern.API
@@ -12,8 +13,8 @@ namespace ObserverPattern.API
     {
         private IApiJson<T> _apiJson;
 
-        public override event Action<object, T> EventStart;
-        public override event Action<object> EventAbort;
+        public override event Action<T> EventStart;
+        public override event Action EventAbort;
 
         public ApiWorkerJson(IApiJson<T> apiJson, IApiSetting apiSetting) : base(apiSetting)
         {
@@ -21,8 +22,7 @@ namespace ObserverPattern.API
             apiSetting.Url = "http://api.openweathermap.org/data/2.5/weather?id=617239&units=metric&type=like&APPID=1b9b3c3931a1d8b0be0ca6f725fd0388";
         }
 
-        #region[WorkerJson]
-        protected override async Task Worker()
+        protected override async Task Worker(CancellationToken token)
         {
             using (WebClient webClient = new WebClient())
             {
@@ -36,14 +36,13 @@ namespace ObserverPattern.API
 
                     var list = _apiJson.GetJson(json);
 
-                    EventStart?.Invoke(this, list);
+                    EventStart?.Invoke(list);
 
-                    await Task.Delay(300000);
+                    await Task.Delay(300000, token);
                 }
             }
 
-            EventAbort?.Invoke(this);
+            EventAbort?.Invoke();
         }
-        #endregion
     }
 }
