@@ -34,9 +34,7 @@ namespace ObserverPattern
 
         private void Show(Weather weather)
         {
-                _weatherData.SetMeasurements(Convert.ToDouble(weather.Temperature.Replace('.', ',')),
-                    Convert.ToDouble(weather.Humidity.Replace('.', ',')),
-                    Convert.ToDouble(weather.Pressure.Replace('.', ',')));
+            _weatherData.SetMeasurements(weather.Temperature, weather.Humidity, weather.Pressure);
         }
 
         private static void ShowAbort()

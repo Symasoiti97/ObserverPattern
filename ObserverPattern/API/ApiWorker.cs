@@ -57,12 +57,10 @@ namespace ObserverPattern.API
 
                     try
                     {
-                        await Task.Delay(2000, token);
+                        await Task.Delay(300000, token);
                     }
                     catch (OperationCanceledException ex)
                     {
-                        // Console.WriteLine(ex.ToString());
-                        //EventAbort?.Invoke();
                     }
                 }
             }
