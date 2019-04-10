@@ -12,8 +12,8 @@ namespace ObserverPattern.API
 {
     class ApiWorker<T> where T : class
     {
-        private IApiSetting _apiSetting;
-        private IApi<T> _api;
+        private readonly IApiSetting _apiSetting;
+        private readonly IApi<T> _api;
 
         private CancellationTokenSource token;
 
@@ -32,7 +32,7 @@ namespace ObserverPattern.API
         {
             _isActive = true;
             token = new CancellationTokenSource();
-            Task.Run(() => Worker(token.Token));
+            Worker(token.Token);
         }
 
         public void Abort()

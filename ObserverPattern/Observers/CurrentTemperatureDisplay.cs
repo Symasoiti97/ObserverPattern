@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ObserverPattern.API.ApiOWM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,11 @@ namespace ObserverPattern.Observers
             _weatherData.RegisterObserver(this);
         }
 
-        public void Update(double temperature, double humidity, double pressure)
+        public void Update(Weather weather)
         {
-            if (_temperature != temperature)
+            if (_temperature != weather.Temperature)
             {
-                _temperature = temperature;
+                _temperature = weather.Temperature;
                 Display();
             }
         }

@@ -10,38 +10,24 @@ using System.Xml.Serialization;
 using ObserverPattern.API;
 using ObserverPattern.API.ApiOWM;
 using ObserverPattern.Observers;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace ObserverPattern
 {
-    //[Serializable]
-    //public class SomeTest
-    //{
-    //    public string BinaryTest { get; set; }
-    //}
-
-    //class Program
-    //{
-    //    static void Main(string[] args)
-    //    {
-    //        XDocument document = new XDocument(
-    //            new XElement("Weather",
-    //                new XElement("pressure", "100")));
-
-    //       var serializer = new XmlSerializer(typeof(Weather));
-    //        XmlReader reader = document.CreateReader();
-    //        Weather myObject = (Weather)serializer.Deserialize(reader);
-    //        reader.Close();
-
-    //        Console.WriteLine(myObject.Pressure);
-    //        Console.ReadKey(true);
-    //    }
-    //}
-
     class Program
     {
         static void Main(string[] args)
         {
-            new OutWither().Go();
+            string url = ConfigurationManager.AppSettings.Get("XmlOWN");
+
+            ApiWorker<Weather> apiWorker = new ApiWorker<Weather>(new ApiWeatherXml(), new WeatherOWMSetting(url));
+
+            WeatherData weatherData = new WeatherData(apiWorker);
+
+            IObserver currentHumidity = new CurrentHumidityDisplay(weatherData);
+            IObserver currentPressure = new CurrentPressureDisplay(weatherData);
+            IObserver currentTemperature = new CurrentTemperatureDisplay(weatherData);
 
             Console.ReadKey();
         }

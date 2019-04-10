@@ -8,6 +8,6 @@ namespace ObserverPattern.API
 {
     interface IApiSetting
     {
-        string Url { get; set; }
+        string Url { get; }
     }
 }

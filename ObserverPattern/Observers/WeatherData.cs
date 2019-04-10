@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ObserverPattern.API;
+using ObserverPattern.API.ApiOWM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +11,20 @@ namespace ObserverPattern.Observers
     class WeatherData : ISubject
     {
         private List<IObserver> _observers;
-        private double _temperature;
-        private double _humidity;
-        private double _pressure;
+        private ApiWorker<Weather> _apiWorker;
+        private Weather _weather;
 
         public WeatherData()
         {
             _observers = new List<IObserver>();
+            _weather = new Weather();
+        }
+
+        public WeatherData(ApiWorker<Weather> apiWorker)
+        {
+            _observers = new List<IObserver>();
+            _apiWorker = apiWorker;
+            Start();
         }
 
         public void RegisterObserver(IObserver observer)
@@ -28,11 +37,9 @@ namespace ObserverPattern.Observers
             _observers.Remove(observer);
         }
 
-        public void SetMeasurements(double temperature, double humidity, double pressure)
+        public void SetMeasurements(Weather weather)
         {
-            _temperature = temperature;
-            _humidity = humidity;
-            _pressure = pressure;
+            _weather = weather;
             NotifyObservers();
         }
 
@@ -40,8 +47,20 @@ namespace ObserverPattern.Observers
         {
             foreach (var observer in _observers)
             {
-                observer.Update(_temperature, _humidity, _pressure);
+                observer.Update(_weather);
             }
+        }
+
+        private void Start()
+        {
+            _apiWorker.EventStart += Show;
+
+            _apiWorker.Start();
+        }
+
+        private void Show(Weather weather)
+        {
+            SetMeasurements(weather);
         }
     }
 }

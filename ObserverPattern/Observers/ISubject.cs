@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ObserverPattern.API.ApiOWM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,6 @@ namespace ObserverPattern.Observers
     {
         void RegisterObserver(IObserver observer);
         void RemoveObserver(IObserver observer);
-        void SetMeasurements(double temperature, double humidity, double pressure);
+        void SetMeasurements(Weather weather);
     }
 }
