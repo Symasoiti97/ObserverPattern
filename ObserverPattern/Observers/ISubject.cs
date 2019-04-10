@@ -11,6 +11,6 @@ namespace ObserverPattern.Observers
     {
         void RegisterObserver(IObserver observer);
         void RemoveObserver(IObserver observer);
-        void SetMeasurements(Weather weather);
+        void StartParse();
     }
 }

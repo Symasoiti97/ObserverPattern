@@ -10,8 +10,8 @@ namespace ObserverPattern.Observers
 {
     class WeatherData : ISubject
     {
+        private readonly ApiWorker<Weather> _apiWorker;
         private List<IObserver> _observers;
-        private ApiWorker<Weather> _apiWorker;
         private Weather _weather;
 
         public WeatherData()
@@ -24,7 +24,6 @@ namespace ObserverPattern.Observers
         {
             _observers = new List<IObserver>();
             _apiWorker = apiWorker;
-            Start();
         }
 
         public void RegisterObserver(IObserver observer)
@@ -37,7 +36,7 @@ namespace ObserverPattern.Observers
             _observers.Remove(observer);
         }
 
-        public void SetMeasurements(Weather weather)
+        private void SetMeasurements(Weather weather)
         {
             _weather = weather;
             NotifyObservers();
@@ -51,7 +50,7 @@ namespace ObserverPattern.Observers
             }
         }
 
-        private void Start()
+        public void StartParse()
         {
             _apiWorker.EventStart += Show;
 

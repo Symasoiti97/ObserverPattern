@@ -23,11 +23,13 @@ namespace ObserverPattern
 
             ApiWorker<Weather> apiWorker = new ApiWorker<Weather>(new ApiWeatherXml(), new WeatherOWMSetting(url));
 
-            WeatherData weatherData = new WeatherData(apiWorker);
+            ISubject weatherData = new WeatherData(apiWorker);
 
             IObserver currentHumidity = new CurrentHumidityDisplay(weatherData);
             IObserver currentPressure = new CurrentPressureDisplay(weatherData);
             IObserver currentTemperature = new CurrentTemperatureDisplay(weatherData);
+
+            weatherData.StartParse();
 
             Console.ReadKey();
         }
